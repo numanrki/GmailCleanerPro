@@ -21,8 +21,8 @@ VIAddVersionKey "LegalCopyright" "© 2026 numanrki"
 
 ; Interface Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\modern-install.ico"
-!define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
+!define MUI_ICON "app.ico"
+!define MUI_UNICON "app.ico"
 
 ; Installer Pages
 !insertmacro MUI_PAGE_WELCOME

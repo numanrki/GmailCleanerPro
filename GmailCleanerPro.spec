@@ -14,7 +14,7 @@ a = Analysis(
     ['gmail_cleaner_pro.py'],
     pathex=[],
     binaries=all_binaries,
-    datas=[('app_icon.ico', '.')] + all_datas,
+    datas=[('app.ico', '.')] + all_datas,
     hiddenimports=all_hiddenimports + [
         'unittest',
         'unittest.mock',
@@ -63,5 +63,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['app_icon.ico'],
+    icon=['app.ico'],
 )
