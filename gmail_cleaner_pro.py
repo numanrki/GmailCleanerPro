@@ -14,6 +14,7 @@ import re
 import json
 import threading
 import webbrowser
+import ssl
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 from collections import defaultdict
@@ -40,7 +41,7 @@ except Exception as e:
 
 # App Info
 APP_NAME = "Gmail Cleaner Pro"
-APP_VERSION = "2.0.2"
+APP_VERSION = "2.0.3"
 AUTHOR = "numanrki"
 GITHUB_REPO = "numanrki/GmailCleanerPro"
 GITHUB_URL = "https://github.com/numanrki"
@@ -1510,7 +1511,17 @@ class GmailCleanerApp:
                 self.root.after(0, finalize)
                 
             except Exception as e:
-                self.root.after(0, lambda: messagebox.showerror("Error", str(e)))
+                error_msg = str(e)
+                if 'SSL' in error_msg or 'DECRYPTION' in error_msg or 'ssl' in error_msg.lower():
+                    self.root.after(0, lambda: messagebox.showerror("Connection Error", 
+                        "SSL connection error occurred.\n\n"
+                        "This usually happens due to network issues.\n"
+                        "Please try:\n"
+                        "1. Check your internet connection\n"
+                        "2. Remove and re-add your account\n"
+                        "3. Restart the application"))
+                else:
+                    self.root.after(0, lambda e=error_msg: messagebox.showerror("Error", e))
                 self.root.after(0, lambda: self.scan_btn.config(state=tk.NORMAL))
                 self.root.after(0, lambda: self.stop_btn.config(state=tk.DISABLED))
             
@@ -1681,7 +1692,17 @@ class GmailCleanerApp:
                 self.root.after(0, finalize)
                 
             except Exception as e:
-                self.root.after(0, lambda: messagebox.showerror("Error", str(e)))
+                error_msg = str(e)
+                if 'SSL' in error_msg or 'DECRYPTION' in error_msg or 'ssl' in error_msg.lower():
+                    self.root.after(0, lambda: messagebox.showerror("Connection Error", 
+                        "SSL connection error occurred.\n\n"
+                        "This usually happens due to network issues.\n"
+                        "Please try:\n"
+                        "1. Check your internet connection\n"
+                        "2. Remove and re-add your account\n"
+                        "3. Restart the application"))
+                else:
+                    self.root.after(0, lambda e=error_msg: messagebox.showerror("Error", e))
                 self.root.after(0, lambda: self.group_scan_btn.config(state=tk.NORMAL))
             
             self.set_progress("Ready", False)
