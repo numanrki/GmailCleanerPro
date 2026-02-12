@@ -40,7 +40,7 @@ except Exception as e:
 
 # App Info
 APP_NAME = "Gmail Cleaner Pro"
-APP_VERSION = "2.0.0"
+APP_VERSION = "2.0.1"
 AUTHOR = "numanrki"
 GITHUB_REPO = "numanrki/GmailCleanerPro"
 GITHUB_URL = "https://github.com/numanrki"
@@ -423,12 +423,12 @@ class GmailCleanerApp:
                   cursor="hand2").pack(side=tk.LEFT)
         # Don't pack update_bar initially - shown when update available
         
-        tk.Button(footer, text="🔄 Updates", font=("Segoe UI", 9),
-                  command=self.check_for_updates_manual, bg="#e0e0e0", fg="#333",
-                  relief=tk.FLAT, padx=10, pady=3, cursor="hand2").pack(side=tk.RIGHT)
-        
         tk.Label(footer, text=f"Made with ❤️ by @{AUTHOR}",
-                 font=("Segoe UI", 9), bg="#f0f0f0", fg="#999").pack(side=tk.RIGHT, padx=20)
+                 font=("Segoe UI", 9), bg="#f0f0f0", fg="#999").pack(side=tk.RIGHT, padx=10)
+        
+        tk.Button(footer, text="🔄 Check Updates", font=("Segoe UI", 9),
+                  command=self.check_for_updates_manual, bg="#e0e0e0", fg="#333",
+                  relief=tk.FLAT, padx=10, pady=3, cursor="hand2").pack(side=tk.RIGHT, padx=10)
     
     def create_scan_tab(self):
         """Create the Scan & Clean tab."""
@@ -1100,6 +1100,7 @@ class GmailCleanerApp:
             return
         
         def do_connect():
+            nonlocal token_filename
             self.set_progress("Connecting to Gmail...", True)
             
             try:
