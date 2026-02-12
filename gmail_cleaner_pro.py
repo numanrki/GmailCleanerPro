@@ -40,7 +40,7 @@ except Exception as e:
 
 # App Info
 APP_NAME = "Gmail Cleaner Pro"
-APP_VERSION = "2.0.1"
+APP_VERSION = "2.0.2"
 AUTHOR = "numanrki"
 GITHUB_REPO = "numanrki/GmailCleanerPro"
 GITHUB_URL = "https://github.com/numanrki"
@@ -423,12 +423,16 @@ class GmailCleanerApp:
                   cursor="hand2").pack(side=tk.LEFT)
         # Don't pack update_bar initially - shown when update available
         
-        tk.Label(footer, text=f"Made with ❤️ by @{AUTHOR}",
-                 font=("Segoe UI", 9), bg="#f0f0f0", fg="#999").pack(side=tk.RIGHT, padx=10)
+        # Right side buttons frame
+        right_frame = tk.Frame(footer, bg="#f0f0f0")
+        right_frame.pack(side=tk.RIGHT)
         
-        tk.Button(footer, text="🔄 Check Updates", font=("Segoe UI", 9),
-                  command=self.check_for_updates_manual, bg="#e0e0e0", fg="#333",
-                  relief=tk.FLAT, padx=10, pady=3, cursor="hand2").pack(side=tk.RIGHT, padx=10)
+        tk.Button(right_frame, text="🔄 Check Updates", font=("Segoe UI", 9, "bold"),
+                  command=self.check_for_updates_manual, bg="#4285f4", fg="white",
+                  relief=tk.FLAT, padx=12, pady=5, cursor="hand2").pack(side=tk.RIGHT, padx=5)
+        
+        tk.Label(right_frame, text=f"Made with ❤️ by @{AUTHOR}",
+                 font=("Segoe UI", 9), bg="#f0f0f0", fg="#999").pack(side=tk.RIGHT, padx=10)
     
     def create_scan_tab(self):
         """Create the Scan & Clean tab."""
