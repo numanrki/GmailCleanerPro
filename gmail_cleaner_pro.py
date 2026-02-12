@@ -41,7 +41,7 @@ except Exception as e:
 
 # App Info
 APP_NAME = "Gmail Cleaner Pro"
-APP_VERSION = "2.0.3"
+APP_VERSION = "2.0.4"
 AUTHOR = "numanrki"
 GITHUB_REPO = "numanrki/GmailCleanerPro"
 GITHUB_URL = "https://github.com/numanrki"
@@ -230,6 +230,7 @@ class GmailCleanerApp:
         self.load_accounts()
         
         self.create_ui()
+        self.create_menu_bar()
         self.check_dependencies()
         
         # Check for updates on startup
@@ -434,6 +435,36 @@ class GmailCleanerApp:
         
         tk.Label(right_frame, text=f"Made with ❤️ by @{AUTHOR}",
                  font=("Segoe UI", 9), bg="#f0f0f0", fg="#999").pack(side=tk.RIGHT, padx=10)
+    
+    def create_menu_bar(self):
+        """Create the application menu bar."""
+        menubar = tk.Menu(self.root)
+        self.root.config(menu=menubar)
+        
+        # File menu
+        file_menu = tk.Menu(menubar, tearoff=0)
+        menubar.add_cascade(label="File", menu=file_menu)
+        file_menu.add_command(label="Add Account", command=lambda: self.connect_gmail())
+        file_menu.add_command(label="Remove Account", command=self.remove_account)
+        file_menu.add_separator()
+        file_menu.add_command(label="Exit", command=self.root.quit)
+        
+        # Help menu
+        help_menu = tk.Menu(menubar, tearoff=0)
+        menubar.add_cascade(label="Help", menu=help_menu)
+        help_menu.add_command(label="🔄 Check for Updates", command=self.check_for_updates_manual)
+        help_menu.add_command(label="☕ Buy Me a Coffee", command=lambda: webbrowser.open(COFFEE_URL))
+        help_menu.add_separator()
+        help_menu.add_command(label="GitHub Repository", command=lambda: webbrowser.open(GITHUB_RELEASES_URL.replace('/releases', '')))
+        help_menu.add_command(label=f"About v{APP_VERSION}", command=self.show_about)
+    
+    def show_about(self):
+        """Show about dialog."""
+        messagebox.showinfo("About Gmail Cleaner Pro",
+            f"Gmail Cleaner Pro v{APP_VERSION}\n\n"
+            f"By @{AUTHOR}\n\n"
+            "Clean your Gmail inbox with ease!\n\n"
+            "GitHub: github.com/numanrki/GmailCleanerPro")
     
     def create_scan_tab(self):
         """Create the Scan & Clean tab."""

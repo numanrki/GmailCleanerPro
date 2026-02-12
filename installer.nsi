@@ -5,18 +5,18 @@
 
 ; General
 Name "Gmail Cleaner Pro"
-OutFile "installer_output\GmailCleanerPro_Setup_v2.0.3.exe"
+OutFile "installer_output\GmailCleanerPro_Setup_v2.0.4.exe"
 InstallDir "$PROGRAMFILES\GmailCleanerPro"
 InstallDirRegKey HKLM "Software\GmailCleanerPro" "InstallDir"
 RequestExecutionLevel admin
 
 ; Version info
-VIProductVersion "2.0.3.0"
+VIProductVersion "2.0.4.0"
 VIAddVersionKey "ProductName" "Gmail Cleaner Pro"
 VIAddVersionKey "CompanyName" "numanrki"
 VIAddVersionKey "FileDescription" "Gmail Cleaner Pro Installer"
-VIAddVersionKey "FileVersion" "2.0.3"
-VIAddVersionKey "ProductVersion" "2.0.3"
+VIAddVersionKey "FileVersion" "2.0.4"
+VIAddVersionKey "ProductVersion" "2.0.4"
 VIAddVersionKey "LegalCopyright" "© 2026 numanrki"
 
 ; Interface Settings
@@ -65,7 +65,7 @@ Section "Install" SecInstall
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GmailCleanerPro" "UninstallString" "$INSTDIR\Uninstall.exe"
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GmailCleanerPro" "DisplayIcon" "$INSTDIR\GmailCleanerPro.exe"
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GmailCleanerPro" "Publisher" "numanrki"
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GmailCleanerPro" "DisplayVersion" "2.0.3"
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GmailCleanerPro" "DisplayVersion" "2.0.4"
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GmailCleanerPro" "NoModify" 1
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\GmailCleanerPro" "NoRepair" 1
 SectionEnd
