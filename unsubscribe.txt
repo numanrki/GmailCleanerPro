@@ -1,0 +1,281 @@
+================================================================================
+GMAIL UNSUBSCRIBE LIST
+================================================================================
+Instructions:
+1. Review this list below
+2. DELETE the lines of senders you want to KEEP (don't delete from Gmail)
+3. KEEP the lines of senders you want to DELETE from Gmail
+4. Save this file
+5. Run: python gmail_unsubscribe_cleaner.py --delete
+================================================================================
+
+Total senders: 264
+Total emails: 1910
+
+--------------------------------------------------------------------------------
+COUNT    COMPANY              NAME                      EMAIL
+--------------------------------------------------------------------------------
+205      Google               Google Alerts             googlealerts-noreply@google.com
+103      Jobleads             JobLeads                  mailer@jobleads.com
+69       Clickbank            ClickBank                 team@clickbank.com
+62       Substack             𝐷𝑖𝑛𝑜 | 𝐓𝐡𝐞 𝐀𝐫𝐭 𝐨𝐟 𝐏𝐮𝐫𝐩𝐨   profitandpurpose247@substack.com
+54       Skool                Tube AI Masterclass (Fr   noreply@skool.com
+43       Hello                Mercari                   no-reply@hello.us.mercari.com
+41       Wordfence            Wordfence                 list@wordfence.com
+39       Nsave                nsave                     hello@nsave.com
+36       Empireflippers       Empire Flippers           info@empireflippers.com
+30       Thehothmarketing     The HOTH                  hello@thehothmarketing.com
+26       Gmail                Numan Rasheed             bhatti3742@gmail.com
+26       M                    Envato                    news@m.elements.envato.com
+25       Google               Google Search Console T   sc-noreply@google.com
+25       Tumblr               Tumblr                    no-reply@tumblr.com
+22       Monetizemore         Kean, MonetizeMore        tools@monetizemore.com
+22       Codester             Codester                  info@codester.com
+22       E                    Udemy Instructor: Serge   no-reply@e.udemymail.com
+22       Yoast                Yoast                     newsletter@yoast.com
+21       Motioninvest         Motion Invest             contact@motioninvest.com
+21       Nvidia               NVIDIA Developer Relati   news@nvidia.com
+20       Info                 myABL                     myabl@info.abl.com
+20       Advanced             Neil Patel                neil@advanced.npdigital.com
+19       Snyk                 Snyk                      support-noreply@snyk.io
+19       Fujifilm             Fujifilm Print Life       fcanprintlife@fujifilm.com
+18       Semrush              Semrush Position Tracki   position-tracking@semrush.com
+18       Itr                  Codecademy                learn@itr.mail.codecademy.com
+17       Hi                   Wellfound                 newsletters@hi.wellfound.com
+16       Google               News from Google          thekeyword-noreply@google.com
+15       Freemius             Freemius Team             yo@freemius.com
+14       Newsletter           Rockstar Propaganda       donotreply@newsletter.rockstargames.com
+14       Reply                eBay                      ebay@reply.ebay.com
+14       Mailersp1            Binance                   do_not_reply@mailersp1.binance.com
+14       Mailersp2            Binance                   do_not_reply@mailersp2.binance.com
+13       News-Mail            Elementor                 team@news-mail.elementor.com
+13       Pabbly               Pabbly                    admin@pabbly.com
+13       Marketing            Strikingly Team           no-reply@marketing.strikingly.com
+13       Athemes              The Team at aThemes       team@athemes.com
+12       N                    Dribbble Pro              no-reply@n.dribbble.com
+12       E                    Bitly Team                hello@e.bitly.com
+12       Ahrefs               Si Quan Ong from Ahrefs   si.quan@ahrefs.com
+11       Ui                   Ubiquiti                  updates@ui.com
+11       Linksmanagement      LinksManagement           support@linksmanagement.com
+11       Rankmath             Bhanu Ahluwalia           bhanu.a@rankmath.com
+11       Coschedule           Taylor @ CoSchedule       taylor@coschedule.com
+11       Global               Meta Blueprint            update@global.metamail.com
+10       Cloudhq              cloudHQ                   marketing.emails@cloudhq.net
+10       Backlinko            Leigh at Backlinko        academy@backlinko.com
+10       Xentraffic           Xentraffic inc.           remi@xentraffic.com
+10       Mail                 ClickUp Team              team@mail.clickup.com
+10       Codepen              CodePen                   support@codepen.io
+10       Exness               Exness.com                no-reply@exness.com
+10       Tubebuddy            TubeBuddy                 hello@tubebuddy.com
+10       Softr                Mariam from Softr         mariam@softr.io
+9        Via-Everflow         XenTraffic inc            no-reply@via-everflow.io
+9        Zoom                 Zoom                      no-reply@zoom.us
+9        Ahrefs               Ahrefs Site Explorer      se@ahrefs.com
+9        Email                Upwork                    upwork@email.upwork.com
+8        Odys                 Odys Global®              hi@odys.global
+8        Pouncer              Sean Jackson | PouncerA   sean@pouncer.ai
+8        Outreach             Emile from Envato         notifications@outreach.impact.com
+7        Unsplash             Unsplash Team             marketing@unsplash.com
+7        Creativemarket       Creative Market           hello@creativemarket.com
+7        Google               Google Business Profile   businessprofile-noreply@google.com
+7        Mixcloudmail         Mixcloud                  noreply@mixcloudmail.com
+7        Coschedule           Amanda @ CoSchedule       amanda@coschedule.com
+7        Thenounproject       Noun Project              info@thenounproject.com
+7        Openrouter           OpenRouter Team           welcome@openrouter.ai
+7        Mail                 Jenny @ Perplexity        team@mail.perplexity.ai
+7        Seocopilotai         Josh Bachynski, CEO, SE   hello@seocopilotai.com
+7        Notifications        Freelancer.com            noreply@notifications.freelancer.com
+6        Smailer1             Binance                   do_not_reply@smailer1.binance.com
+6        Hey                  Engine Labs               simon@hey.enginelabs.ai
+6        Nealschaffer         Neal Schaffer             neal@nealschaffer.com
+6        Info                 Laravel                   ship@info.laravel.com
+6        Digital              Meta for Developers       update@digital.metamail.com
+6        Em-S                 Dropbox                   no-reply@em-s.dropbox.com
+6        Google               Google Maps               google-maps-noreply@google.com
+6        List                 AIPRM                     list2@list.aiprm.com
+6        Optimizepress        OptimizePress             team@optimizepress.com
+6        Developers           Facebook                  noreply@developers.facebook.com
+5        App                  Fasset                    hello@app.fasset.io
+5        Email                Clash of Clans            no-reply@email.supercell.com
+5        Iconscout            IconScout                 mail@iconscout.com
+5        Umartazkeer          Umar Tazkeer              training@umartazkeer.com
+5        Thirstyaffiliates    Katelyn at ThirstyAffil   outreach@thirstyaffiliates.com
+5        Kwork                Kwork                     news@kwork.com
+5        Global               Meta for Business         advertise-noreply@global.metamail.com
+5        Email                Manychat                  info@email.manychat.com
+4        Emails               Hostinger                 team@emails.hostinger.com
+4        Pixabay              Pixabay                   noreply@pixabay.com
+4        Mailerlite           Kerry | MailerLite        info@mailerlite.com
+4        Bankalfalah          Bank.Alfalah              no.reply@bankalfalah.com
+4        Google               Google Developer Progra   googledev-noreply@google.com
+4        Coschedule           Riley @ CoSchedule        riley@coschedule.com
+4        Google               Google AI Studio          googleaistudio-noreply@google.com
+4        Slack                Making WordPress (via S   notification@slack.com
+4        News                 Currencylayer             communications@news.apilayer.com
+4        Xpro                 MIT xPRO Enrollment Ope   hello@xpro.mit.edu
+4        Clickrank            ClickRank Team            support@clickrank.ai
+4        M                    Envato Market             news@m.market.envato.com
+4        Surveymonkeyuser     happiness@onic.pk via S   member@surveymonkeyuser.com
+4        Softr                JJ Englert                jj@softr.io
+4        Canva                Canva                     no-reply@canva.com
+4        Email                Anna Bauer | JobLeads     anna.bauer@email.jobleads.com
+4        Octobercms           October CMS               hello@octobercms.com
+4        Google               Google Notifications      notify-noreply@google.com
+4        Mail                 AppSumo's MYB             appsumo@mail.beehiiv.com
+4        Github               coderabbitai[bot]         notifications@github.com
+4        M                    Redbubble                 heythere@m.redbubble.com
+3        Xstak                XStak                     marketing@xstak.com
+3        Adzooma              Adzooma                   hello@adzooma.com
+3        Google               Google Local Guides       noreply-local-guides@google.com
+3        Email                Jan Hendrik von Ahlen |   jvonahlen@email.jobleads.com
+3        Google               Looker Customer Newslet   looker-studio-noreply@google.com
+3        Mail                 Tyler from beehiiv        product@mail.beehiiv.com
+3        Email                The Termly Team           termlyservices@email.termly.io
+3        Postman              The Postman Team          events@postman.com
+3        Google               Google Gemini             google-gemini-noreply@google.com
+3        Substack             Substack                  no-reply@substack.com
+3        News                 consentmanager            newsletter@news.consentmanager.net
+3        Coschedule           Garrett @ CoSchedule      garrett@coschedule.com
+3        Usearticle           UseArticle                hello@usearticle.com
+3        Tinyurl              TinyURL                   no-reply@tinyurl.email
+3        Laracasts            Jeffrey Way               jeffrey@laracasts.com
+3        Tradingview          TradingView               hello@tradingview.com
+3        Imgix                Imgix                     marketing@imgix.com
+3        Freemius             Freemius                  friends@freemius.com
+3        Email                OpenAI                    noreply@email.openai.com
+3        Customers            Zulkar Naim - Open Peda   noreply@customers.gumroad.com
+3        Email                Eric Beck | JobLeads      eric.beck@email.jobleads.com
+3        Mail                 Adobe Firefly             mail@mail.adobe.com
+3        Shanebarker          Shane Barker              shane@shanebarker.com
+3        Iqoption             IQ Option                 noreply@iqoption.com
+3        Fastbots             FastBots.ai               info@fastbots.ai
+3        Students             Udemy                     hello@students.udemy.com
+2        Info                 Sololearn                 team@info.sololearn.com
+2        Quora                Quora Suggested Spaces    globeeaglenews-space@quora.com
+2        Mail                 ClickUpdates 4.0          clickupdates@mail.clickup.com
+2        Mail                 Notion Team               team@mail.notion.so
+2        Nasa                 NASA                      hq-rsvp@nasa.gov
+2        Setupad              Setupad Team              contact@setupad.com
+2        Chess                Chess.com                 hello@chess.com
+2        Coderabbit           CodeRabbit Newsletter     newsletter@coderabbit.ai
+2        Quora                Quora Suggested Spaces    thingshappeningaroundtheglobe-space@quora.com
+2        Bootstrapped         Brecht at Bootstrapped    info@bootstrapped.ventures
+2        News                 one.com                   one@news.one.com
+2        Paidviewpoint        PaidViewpoint             notification@paidviewpoint.com
+2        Wanotifier           Ram from WANotifier       hello@wanotifier.com
+2        Elevatepay           Elevate Pay Onboarding    onboarding@elevatepay.co
+2        Gopayfast            Fahad Zahid               fahad.zahid@gopayfast.com
+2        Secomapp             Rado Co.                  no-reply@secomapp.com
+2        Mg                   FlexJobs                  notify@mg.flexjobs.com
+2        Statusupdate         statu                     s@statusupdate.bitly.com
+2        Skillspanda          Huzaifa from SkillsPand   info@skillspanda.com
+2        Skillshare           Cat Coquillette via Ski   hello@skillshare.com
+2        Mql5                 MQL5.community            noreply@mql5.com
+2        Google               Google Merchant Center    googlebase-noreply@google.com
+2        Cpalead              CPAlead                   noreply@cpalead.com
+2        Onesignal            OneSignal                 team@onesignal.com
+2        Ifttt                IFTTT                     mail@ifttt.com
+2        Keywordseverywhere   Kevin at KE               kevin@keywordseverywhere.com
+2        Optinmonster         Angie at OptinMonster     angie@optinmonster.com
+2        Whazzuup             Whazzuup                  granto@whazzuup.com
+2        Sendfoxmail          David at AppSumo Origin   mail@sendfoxmail.com
+2        Email                JobLeads                  careerservice@email.jobleads.com
+2        Gleam                Stuart from Gleam         hello@gleam.io
+2        Senja                Sara @ Senja              partners@senja.io
+2        Mailer               Gab 🐸                     gabnews@mailer.gab.com
+2        Facebookmail         Shah via Messenger        messages@facebookmail.com
+1        Coderabbit           The CodeRabbit Team       hello@coderabbit.ai
+1        Messaging            WhatsApp for Business     no-reply@messaging.metamail.com
+1        Account              Canva                     no-reply@account.canva.com
+1        Grabify              Grabify                   noreply@grabify.link
+1        Info                 v0 Team                   ship@info.vercel.com
+1        Quora                Quora Suggested Spaces    ukpoliticalspotlight-space@quora.com
+1        Clickbank            Spark by ClickBank        spark@clickbank.com
+1        Postman              The Postman Team          product@postman.com
+1        News                 Manus Team                info@news.manus.im
+1        Replit               Replit                    notifications@replit.com
+1        Admin                Manus                     info@admin.manus.im
+1        Smailer2             Binance                   do_not_reply@smailer2.binance.com
+1        Substack             Satyajett                 mysticsatyajett@substack.com
+1        Partner              Yandex Ads Boost          boost@partner.yandex.com
+1        Facebookmail         Facebook                  notification@facebookmail.com
+1        Freemius             Freemius Team             support@freemius.com
+1        Em                   MarketingProfs Events     marketingprofs@em.marketingprofs.com
+1        Github               GitHub                    no-reply@github.com
+1        Meetup               WordPress                 info@meetup.com
+1        Quora                Quora Suggested Spaces    askverse-space@quora.com
+1        Webshare             Webshare Support          support@webshare.io
+1        Softr                Romain from Softr         romain@softr.io
+1        Build                Coda                      hello@build.coda.io
+1        Email                Pokémon GO                pokemongo@email.nianticlabs.com
+1        Quora                Quora Suggested Spaces    truthaboutrussia-space@quora.com
+1        Gopayfast            Narmeen Nasir             narmeen.nasir@gopayfast.com
+1        Semscoop             SEMScoop                  admin@semscoop.com
+1        Support              Meta Audience Network     audiencenetwork-noreply@support.facebook.com
+1        Secretseo            Josh Bachynski            josh@secretseo.guru
+1        Mail                 Kanishka                  beehiivblog@mail.beehiiv.com
+1        Syedbalkhi           Syed Balkhi               s@syedbalkhi.com
+1        Maxbounty            MaxBounty Compliance      compliance@maxbounty.com
+1        Hey                  cto.new                   contact@hey.enginelabs.ai
+1        Gopayfast            CS-Payfast                cs@gopayfast.com
+1        Appsumo              Noah at AppSumo           noah@appsumo.com
+1        Oxapay               OxaPay                    noreply@oxapay.com
+1        Quora                Cinema Central            cinemacentral-space@quora.com
+1        Fasset               Fasset                    noreply@fasset.com
+1        Buymeacoffee         Buy Me a Coffee           hello@buymeacoffee.com
+1        Info                 n8n.io                    hello@info.n8n.io
+1        Ahrefs               Rebekah from Ahrefs       rebekah.bek@ahrefs.com
+1        Google               Google Ads                ads-account-noreply@google.com
+1        Nbpfunds             fm                        r@nbpfunds.com
+1        Ahrefs               Constance from Ahrefs     constance.tan@ahrefs.com
+1        Freemius             RedRank via Freemius      pay@freemius.com
+1        Ses                  Nikol (Mangools)          info@ses.mangools.com
+1        Vercel               Vercel                    notifications@vercel.com
+1        Quora                Quora Suggested Spaces    ukrainedefensedaily-space@quora.com
+1        Hello                Mindvalley                info@hello.mindvalley.com
+1        Mail                 TypeGPT                   noreply@mail.typegpt.net
+1        Wordpress            Plugin Directory at Wor   plugins@wordpress.org
+1        Peopleperhour        PeoplePerHour             noreply@peopleperhour.com
+1        Elevatepay           Khalid from Elevate Pay   hello@elevatepay.co
+1        Mail                 Bybit                     marketing@mail.bybit.com
+1        Emea                 Coca-Cola Pakistan        news@emea.coca-cola.com
+1        Ma                   Linktree                  hello@ma.linktr.ee
+1        Google               Google Cloud              googlecloud@google.com
+1        Quora                Quora Suggested Spaces    turningpointsspace-space@quora.com
+1        Google               Google Antigravity        antigravity-noreply@google.com
+1        Seowins              Hridoy Rehman 🔥           hridoy@seowins.io
+1        Google               Jules                     jules-noreply@google.com
+1        Mail                 Tyler Denk                blog@mail.beehiiv.com
+1        Quora                Quora Suggested Spaces    beststorybyallworld-space@quora.com
+1        Quora                Quora Suggested Spaces    russianinvasionofukraine2022-space@quora.com
+1        Quora                Quora Suggested Spaces    ofcoursemeastrology-space@quora.com
+1        N8Nbazar             N8N Bazar                 hello@n8nbazar.ai
+1        Jetbrains            The YouTrack team         news@jetbrains.com
+1        Jobleads             Claudia Baker             cbaker@jobleads.com
+1        Quora                Quora Suggested Spaces    thetoxicnarcissist-space@quora.com
+1        Twinehq              Twine                     hello@twinehq.com
+1        Mail                 Tony @ beehiiv            tonyvarghese@mail.beehiiv.com
+1        Quora                SEO                       searchengineoptimisation-space@quora.com
+1        Nsave                suppor                    t@nsave.com
+1        Quora                Quora Suggested Spaces    theconservativealliance-space@quora.com
+1        Google               Google Tips & Updates     googlecommunityteam-noreply@google.com
+1        Impact               Nihal                     nihal.somers@impact.com
+1        Make                 Make                      info@make.com
+1        Partner              Yandex Advertising Netw   support@partner.yandex.ru
+1        Nsave                Abdallah at nsave         updates@nsave.com
+1        Info                 Remitly                   service@info.remitly.com
+1        Quora                Quora Suggested Spaces    rykinformation-space@quora.com
+1        Feedback             Google                    surveys@feedback.google.com
+1        Stackblitz           Eric at Bolt.new          ericsimons@stackblitz.com
+1        Codingame            The CodinGame Team        no-reply@codingame.com
+1        Email                FlexJobs                  notice@email.flexjobs.com
+1        Advergic             Advergic                  hello@advergic.com
+1        Senja                Olly @ Senja              olly@senja.io
+1        Designcloud          suppor                    t@designcloud.appypie.com
+1        Amazon               Amazon Associates Progr   store-news@amazon.com
+1        Surgegraph           SurgeGraph                hello@surgegraph.io
+1        Imgix                Alfredo at Imgix          alfredo.deambrosi@imgix.com
+1        Joomshaper           JoomShaper                no-reply@joomshaper.com
+1        Gumlet               Divyesh from Gumlet       divyesh@gumlet.com
+1        Quora                Quora Suggested Spaces    theknowleges-space@quora.com
+1        Kaggle               Kaggle                    no-reply@kaggle.com
