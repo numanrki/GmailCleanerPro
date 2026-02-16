@@ -3,7 +3,7 @@
 ; Author: numanrki
 
 #define MyAppName "Gmail Cleaner Pro"
-#define MyAppVersion "2.0.4"
+#define MyAppVersion "2.0.7"
 #define MyAppPublisher "numanrki"
 #define MyAppURL "https://github.com/numanrki/GmailCleanerPro"
 #define MyAppExeName "GmailCleanerPro.exe"

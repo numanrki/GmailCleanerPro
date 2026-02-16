@@ -41,7 +41,7 @@ except Exception as e:
 
 # App Info
 APP_NAME = "Gmail Cleaner Pro"
-APP_VERSION = "2.0.4"
+APP_VERSION = "2.0.7"
 AUTHOR = "numanrki"
 GITHUB_REPO = "numanrki/GmailCleanerPro"
 GITHUB_URL = "https://github.com/numanrki"
@@ -445,7 +445,7 @@ class GmailCleanerApp:
         file_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="File", menu=file_menu)
         file_menu.add_command(label="Add Account", command=lambda: self.connect_gmail())
-        file_menu.add_command(label="Remove Account", command=self.remove_account)
+        file_menu.add_command(label="Remove Account", command=self.remove_current_account)
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.root.quit)
         
@@ -1439,6 +1439,23 @@ class GmailCleanerApp:
             messagebox.showinfo("Up to Date", 
                 f"You're running the latest version (v{APP_VERSION})!")
     
+    def api_call_with_retry(self, api_func, max_retries=3):
+        """Execute API call with retry logic for SSL/network errors."""
+        import time
+        last_error = None
+        for attempt in range(max_retries):
+            try:
+                return api_func()
+            except Exception as e:
+                last_error = e
+                error_str = str(e).lower()
+                if 'ssl' in error_str or 'decryption' in error_str or 'connection' in error_str:
+                    if attempt < max_retries - 1:
+                        time.sleep(1 * (attempt + 1))  # Exponential backoff: 1s, 2s, 3s
+                        continue
+                raise e
+        raise last_error
+    
     def scan_emails(self):
         if not self.is_connected:
             return
@@ -1448,7 +1465,7 @@ class GmailCleanerApp:
         self.scan_btn.config(state=tk.DISABLED)
         
         def do_scan():
-            self.set_progress("Fetching emails...", True)
+            self.set_progress("Initializing scan...", True)
             self.sender_listbox.delete(0, tk.END)
             self.all_senders = {}
             self.all_sender_items = []
@@ -1456,8 +1473,15 @@ class GmailCleanerApp:
             try:
                 all_messages = {}
                 page_token = None
+                batch_num = 0
+                
+                # Phase 1: Fetch email IDs
+                self.root.after(0, lambda: self.scan_status.config(
+                    text="📥 Phase 1: Fetching email list from Gmail..."))
+                self.root.after(0, lambda: self.live_counter.config(text="Starting..."))
                 
                 while not self.stop_scan:
+                    batch_num += 1
                     response = self.service.users().messages().list(
                         userId='me', maxResults=500, pageToken=page_token
                     ).execute()
@@ -1468,32 +1492,46 @@ class GmailCleanerApp:
                         new_count += 1
                     
                     count = len(all_messages)
-                    self.root.after(0, lambda c=count, n=new_count:
-                        self.update_live_status(f"📥 Fetching... {c} emails", f"+{n}"))
+                    # Show detailed progress: batch number, total emails, new in batch
+                    self.root.after(0, lambda c=count, n=new_count, b=batch_num:
+                        self.update_live_status(
+                            f"📥 Fetching batch #{b}... {c} emails found",
+                            f"+{n} new"))
                     
                     page_token = response.get('nextPageToken')
                     if not page_token or count >= 5000:
                         break
                 
-                self.root.after(0, lambda: self.live_counter.config(text=""))
-                
-                senders = defaultdict(lambda: {'count': 0, 'name': '', 'email': ''})
                 messages = list(all_messages.values())
                 total = len(messages)
+                
+                # Show completion of phase 1
+                self.root.after(0, lambda t=total: self.scan_status.config(
+                    text=f"✅ Phase 1 complete: {t} emails found. Now analyzing senders..."))
+                self.root.after(0, lambda t=total: self.live_counter.config(text=f"{t} emails"))
+                
+                # Phase 2: Analyze emails to extract senders
+                senders = defaultdict(lambda: {'count': 0, 'name': '', 'email': ''})
                 
                 for i, msg in enumerate(messages):
                     if self.stop_scan:
                         break
                     
-                    if i % 10 == 0:
-                        self.root.after(0, lambda x=i, t=total:
-                            self.update_live_status(f"📊 Analyzing... {x}/{t}", ""))
+                    # Update progress every 5 emails for better responsiveness
+                    if i % 5 == 0:
+                        progress_pct = int((i / total) * 100) if total > 0 else 0
+                        sender_count = len(senders)
+                        self.root.after(0, lambda x=i, t=total, p=progress_pct, s=sender_count:
+                            self.update_live_status(
+                                f"📊 Phase 2: Analyzing {x}/{t} ({p}%)",
+                                f"{s} senders found"))
                     
                     try:
-                        data = self.service.users().messages().get(
+                        # Use retry for API call
+                        data = self.api_call_with_retry(lambda: self.service.users().messages().get(
                             userId='me', id=msg['id'], format='metadata',
                             metadataHeaders=['From']
-                        ).execute()
+                        ).execute())
                         
                         headers = {h['name']: h['value'] for h in data['payload']['headers']}
                         from_header = headers.get('From', 'Unknown')
@@ -1504,20 +1542,26 @@ class GmailCleanerApp:
                         name_match = re.match(r'^"?([^"<]+)"?\s*<', from_header)
                         name = name_match.group(1).strip() if name_match else email.split('@')[0]
                         
+                        is_new = senders[email]['count'] == 0
                         senders[email]['count'] += 1
                         senders[email]['name'] = name[:22]
                         senders[email]['email'] = email
                         
-                        if senders[email]['count'] == 1:
+                        # Show sender in listbox immediately when first found
+                        if is_new:
                             display = f"{senders[email]['count']:>5}   {name[:22]:<22}   {email}"
-                            self.root.after(0, lambda d=display:
-                                self.sender_listbox.insert(tk.END, d))
-                    except:
+                            self.root.after(0, lambda d=display: self.sender_listbox.insert(tk.END, d))
+                            self.root.after(0, lambda s=len(senders):
+                                self.live_counter.config(text=f"{s} senders found"))
+                    except Exception as api_err:
+                        # Skip this message but continue scanning
                         pass
                 
                 self.all_senders = dict(senders)
                 
                 def finalize():
+                    # Show sorting status
+                    self.scan_status.config(text="📊 Sorting results by email count...")
                     self.sender_listbox.delete(0, tk.END)
                     sorted_senders = sorted(senders.items(), key=lambda x: -x[1]['count'])
                     
@@ -1528,9 +1572,10 @@ class GmailCleanerApp:
                         self.sender_listbox.insert(tk.END, display)
                     
                     total_emails = sum(s['count'] for s in senders.values())
-                    status = "⏹️ Stopped" if self.stop_scan else "✅"
-                    self.scan_status.config(text=f"{status} {len(senders)} senders • {total_emails} emails")
-                    self.live_counter.config(text="")
+                    status = "⏹️ Stopped" if self.stop_scan else "✅ Scan complete!"
+                    self.scan_status.config(text=f"{status} Found {len(senders)} unique senders")
+                    # Keep showing the final count instead of clearing
+                    self.live_counter.config(text=f"{total_emails} emails total")
                     self.export_btn.config(state=tk.NORMAL)
                     self.copy_emails_btn.config(state=tk.NORMAL)
                     self.scan_btn.config(state=tk.NORMAL)
@@ -1563,6 +1608,8 @@ class GmailCleanerApp:
     def update_live_status(self, status, counter):
         self.scan_status.config(text=status)
         self.live_counter.config(text=counter)
+        # Also update main progress label for visibility
+        self.progress_label.config(text=status)
     
     def filter_senders(self, *args):
         search_text = self.filter_var.get().lower()
@@ -1637,27 +1684,36 @@ class GmailCleanerApp:
         self.group_scan_btn.config(state=tk.DISABLED)
         
         def do_scan():
-            self.set_progress("Scanning domain groups...", True)
-            self.root.after(0, lambda: self.groups_status.config(text="📥 Fetching emails..."))
+            self.set_progress("Initializing domain scan...", True)
+            self.root.after(0, lambda: self.groups_status.config(
+                text="📥 Phase 1: Fetching email list from Gmail..."))
+            self.root.after(0, lambda: self.groups_live_counter.config(text="Starting..."))
+            
+            # Clear domain listbox to show fresh progress
+            self.root.after(0, lambda: self.domain_listbox.delete(0, tk.END))
             
             try:
                 # Collect all emails with minimal data
                 all_messages = {}
                 page_token = None
+                batch_num = 0
                 
                 while True:
+                    batch_num += 1
                     response = self.service.users().messages().list(
                         userId='me', maxResults=500, pageToken=page_token
                     ).execute()
                     
+                    new_count = 0
                     for msg in response.get('messages', []):
                         all_messages[msg['id']] = msg
+                        new_count += 1
                     
                     count = len(all_messages)
-                    self.root.after(0, lambda c=count: self.groups_status.config(
-                        text=f"📥 Fetching... {c} emails"))
-                    self.root.after(0, lambda c=count: self.groups_live_counter.config(
-                        text=f"{c}"))
+                    self.root.after(0, lambda c=count, b=batch_num, n=new_count: self.groups_status.config(
+                        text=f"📥 Fetching batch #{b}... {c} emails found"))
+                    self.root.after(0, lambda c=count, n=new_count: self.groups_live_counter.config(
+                        text=f"+{n} new"))
                     
                     page_token = response.get('nextPageToken')
                     if not page_token or count >= 5000:
@@ -1668,21 +1724,27 @@ class GmailCleanerApp:
                 total = len(messages)
                 domain_data = {}  # {domain: {count: 0, senders: set()}}
                 
-                self.root.after(0, lambda: self.groups_status.config(
-                    text=f"📊 Analyzing {total} emails..."))
+                self.root.after(0, lambda t=total: self.groups_status.config(
+                    text=f"✅ Phase 1 complete: {t} emails. Now grouping by domain..."))
+                self.root.after(0, lambda t=total: self.groups_live_counter.config(
+                    text=f"{t} emails"))
                 
                 for i, msg in enumerate(messages):
-                    if i % 20 == 0:
-                        self.root.after(0, lambda x=i, t=total: self.groups_status.config(
-                            text=f"📊 Analyzing... {x}/{t}"))
-                        self.root.after(0, lambda x=i, t=total: self.groups_live_counter.config(
-                            text=f"{x}/{t}"))
+                    # Update progress every 5 emails for better responsiveness
+                    if i % 5 == 0:
+                        progress_pct = int((i / total) * 100) if total > 0 else 0
+                        domain_count = len(domain_data)
+                        self.root.after(0, lambda x=i, t=total, p=progress_pct, d=domain_count: self.groups_status.config(
+                            text=f"📊 Phase 2: Analyzing {x}/{t} ({p}%)"))
+                        self.root.after(0, lambda d=domain_count: self.groups_live_counter.config(
+                            text=f"{d} domains found"))
                     
                     try:
-                        data = self.service.users().messages().get(
+                        # Use retry for API call
+                        data = self.api_call_with_retry(lambda: self.service.users().messages().get(
                             userId='me', id=msg['id'], format='metadata',
                             metadataHeaders=['From']
-                        ).execute()
+                        ).execute())
                         
                         headers = {h['name']: h['value'] for h in data['payload']['headers']}
                         from_header = headers.get('From', 'Unknown')
@@ -1694,13 +1756,22 @@ class GmailCleanerApp:
                         # Extract domain
                         domain = email.split('@')[-1].lower() if '@' in email else 'unknown'
                         
-                        if domain not in domain_data:
+                        is_new_domain = domain not in domain_data
+                        if is_new_domain:
                             domain_data[domain] = {'count': 0, 'senders': set()}
                         
                         domain_data[domain]['count'] += 1
                         domain_data[domain]['senders'].add(email)
                         
-                    except:
+                        # Show domain in listbox immediately when first found
+                        if is_new_domain:
+                            display = f"{'?':>5}   {'?':>6}     {domain}"
+                            self.root.after(0, lambda d=display: self.domain_listbox.insert(tk.END, d))
+                            self.root.after(0, lambda dc=len(domain_data):
+                                self.groups_live_counter.config(text=f"{dc} domains found"))
+                        
+                    except Exception as api_err:
+                        # Skip this message but continue scanning
                         pass
                 
                 # Convert to domain_groups format
@@ -1713,11 +1784,13 @@ class GmailCleanerApp:
                     }
                 
                 def finalize():
+                    self.groups_status.config(text="📊 Sorting results...")
                     self.refresh_domain_listbox()
                     total_domains = len(self.domain_groups)
                     total_emails = sum(d['count'] for d in self.domain_groups.values())
-                    self.groups_status.config(text=f"✅ {total_domains} domains • {total_emails} emails")
-                    self.groups_live_counter.config(text="")
+                    self.groups_status.config(text=f"✅ Scan complete! Found {total_domains} domains")
+                    # Keep showing final count instead of clearing
+                    self.groups_live_counter.config(text=f"{total_emails} emails total")
                     self.group_scan_btn.config(state=tk.NORMAL)
                 
                 self.root.after(0, finalize)
@@ -1856,24 +1929,20 @@ class GmailCleanerApp:
             self.domain_delete_btn.config(state=tk.DISABLED, bg="#cccccc")
     
     def delete_all_from_domains(self):
-        """Delete all emails from selected domains."""
+        """Delete all emails from selected domains by searching each domain directly."""
         if not self.selected_domains:
             return
         
-        # Gather all email addresses from selected domains
-        emails_to_delete = []
-        for domain in self.selected_domains:
-            if domain in self.domain_groups:
-                emails_to_delete.extend(self.domain_groups[domain]['emails'])
-        
-        if not emails_to_delete:
-            messagebox.showinfo("No Emails", "No emails found in selected domains.")
-            return
-        
+        # Calculate totals
         total_emails = sum(self.domain_groups.get(d, {}).get('count', 0) 
                           for d in self.selected_domains)
-        total_senders = len(emails_to_delete)
+        total_senders = sum(self.domain_groups.get(d, {}).get('senders', 0) 
+                          for d in self.selected_domains)
         domain_count = len(self.selected_domains)
+        
+        if total_emails == 0:
+            messagebox.showinfo("No Emails", "No emails found in selected domains.\nPlease scan domain groups first.")
+            return
         
         # Show sample domains
         sample_domains = list(self.selected_domains)[:5]
@@ -1896,40 +1965,43 @@ class GmailCleanerApp:
         
         def do_delete():
             deleted = 0
-            failed_senders = []
-            senders = emails_to_delete
+            failed_domains = []
+            domains_list = list(self.selected_domains)
             
             try:
-                for i, email in enumerate(senders):
+                for i, domain in enumerate(domains_list):
                     if progress_dialog.cancelled:
                         break
                     
                     # Update overall progress
-                    def update_overall(x=i, t=len(senders), e=email):
-                        progress_dialog.update_overall(x, t, e)
+                    def update_overall(x=i, t=len(domains_list), d=domain):
+                        progress_dialog.update_overall(x, t, f"@{d}")
                     self.root.after(0, update_overall)
                     
                     messages = []
                     page_token = None
                     
-                    # Find all messages from this sender
-                    search_query = f'from:"{email}"'
+                    # Search by domain directly - more reliable than individual emails
+                    search_query = f'from:@{domain}'
                     while True:
                         if progress_dialog.cancelled:
                             break
-                        response = self.service.users().messages().list(
-                            userId='me', q=search_query, maxResults=500, pageToken=page_token
-                        ).execute()
-                        found = response.get('messages', [])
-                        messages.extend(found)
-                        msg_count = len(messages)
-                        self.root.after(0, lambda c=msg_count: progress_dialog.update_sender(c, 0, finding=True))
-                        page_token = response.get('nextPageToken')
-                        if not page_token:
+                        try:
+                            response = self.service.users().messages().list(
+                                userId='me', q=search_query, maxResults=500, pageToken=page_token
+                            ).execute()
+                            found = response.get('messages', [])
+                            messages.extend(found)
+                            msg_count = len(messages)
+                            self.root.after(0, lambda c=msg_count: progress_dialog.update_sender(c, 0, finding=True))
+                            page_token = response.get('nextPageToken')
+                            if not page_token:
+                                break
+                        except Exception as search_err:
                             break
                     
                     if not messages:
-                        failed_senders.append(email)
+                        failed_domains.append(domain)
                         continue
                     
                     if messages and not progress_dialog.cancelled:
@@ -1966,8 +2038,8 @@ class GmailCleanerApp:
                                     progress_dialog.update_stats(td))
                 
                 # Final update
-                total_senders_count = len(senders)
-                self.root.after(0, lambda: progress_dialog.update_overall(total_senders_count, total_senders_count, "Complete!"))
+                total_domains_count = len(domains_list)
+                self.root.after(0, lambda: progress_dialog.update_overall(total_domains_count, total_domains_count, "Complete!"))
                 self.root.after(0, progress_dialog.set_complete)
                 
                 if progress_dialog.cancelled:
@@ -1980,11 +2052,11 @@ class GmailCleanerApp:
                     self.root.after(0, self.update_domain_summary)
                     self.root.after(1000, progress_dialog.close)
                     
-                    result_msg = f"Deleted {deleted} emails\nfrom {domain_count} domains ({len(senders)} senders)!"
-                    if failed_senders:
-                        result_msg += f"\n\n⚠️ No emails found for {len(failed_senders)} sender(s)."
+                    result_msg = f"Deleted {deleted} emails\nfrom {domain_count} domains!"
+                    if failed_domains:
+                        result_msg += f"\n\n⚠️ No emails found for {len(failed_domains)} domain(s)."
                     self.root.after(1100, lambda m=result_msg: messagebox.showinfo("✅ Complete!", m))
-                    self.root.after(1200, self.scan_emails)
+                    self.root.after(1200, self.scan_domain_groups)
                 
             except Exception as e:
                 self.root.after(0, progress_dialog.close)
